@@ -9,33 +9,33 @@ pub struct Tx {
     pub amount: i32,
     pub signature: String,
     pub hash: String,
-    pub timestamp: u64,
+    pub timestamp: i64,
 }
 
 impl Tx {
-    // pub fn new(
-    //     sender: String,
-    //     receiver: String,
-    //     amount: f32,
-    //     signature: String,
-    //     hash: String,
-    //     timestamp: u64,
-    // ) -> Tx {
-    //     Tx {
-    //         sender,
-    //         receiver,
-    //         amount,
-    //         signature,
-    //         hash,
-    //         timestamp,
-    //     }
-    // }
+    pub fn new(
+        sender: String,
+        receiver: String,
+        amount: i32,
+        signature: String,
+        hash: String,
+        timestamp: i64,
+    ) -> Tx {
+        Tx {
+            sender,
+            receiver,
+            amount,
+            signature,
+            hash,
+            timestamp,
+        }
+    }
 
     pub fn calculate_hash(&self) -> String {
         let mut hasher = Sha256::new();
         let data = format!(
-            "{}{}{}{}{}",
-            self.sender, self.receiver, self.amount, self.signature, self.timestamp
+            "{}{}{}{}",
+            self.sender, self.receiver, self.amount, self.timestamp
         );
         hasher.input_str(&data);
         hasher.result_str()
