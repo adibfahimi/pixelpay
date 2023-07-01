@@ -16,28 +16,6 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(
-        index: u32,
-        timestamp: u64,
-        hash: String,
-        prev_hash: String,
-        data: Vec<Tx>,
-        merkle_root: String,
-        difficulty: u32,
-        nonce: u32,
-    ) -> Block {
-        Block {
-            index,
-            timestamp,
-            hash,
-            prev_hash,
-            data,
-            merkle_root,
-            difficulty,
-            nonce,
-        }
-    }
-
     pub fn calculate_hash(&self) -> String {
         let mut hasher = Sha256::new();
         let data = format!(

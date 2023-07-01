@@ -6,31 +6,13 @@ use serde::{Deserialize, Serialize};
 pub struct Tx {
     pub sender: String,
     pub receiver: String,
-    pub amount: i32,
+    pub amount: u32,
     pub signature: String,
     pub hash: String,
-    pub timestamp: i64,
+    pub timestamp: u64,
 }
 
 impl Tx {
-    pub fn new(
-        sender: String,
-        receiver: String,
-        amount: i32,
-        signature: String,
-        hash: String,
-        timestamp: i64,
-    ) -> Tx {
-        Tx {
-            sender,
-            receiver,
-            amount,
-            signature,
-            hash,
-            timestamp,
-        }
-    }
-
     pub fn calculate_hash(&self) -> String {
         let mut hasher = Sha256::new();
         let data = format!(
@@ -50,16 +32,8 @@ impl Tx {
             return Err("Sender and receiver cannot be the same".to_string());
         }
 
-        if self.amount <= 0 {
-            return Err("Amount must be greater than 0".to_string());
-        }
-
-        if self.signature == "".to_string() {
+        if self.signature == *"" {
             return Err("Signature cannot be empty".to_string());
-        }
-
-        if self.timestamp <= 0 {
-            return Err("Timestamp must be greater than 0".to_string());
         }
 
         Ok(())

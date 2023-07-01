@@ -5,7 +5,7 @@ use std::sync::Mutex;
 
 #[derive(Serialize)]
 struct BalanceResponse {
-    balance: i32,
+    balance: u32,
 }
 
 pub async fn get_balance(
