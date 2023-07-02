@@ -1,7 +1,5 @@
 # Pixelpay
 
-## Description:
-
 The pixelpay repository is a project that provides a implementation of a blockchain
 using the Rust programming language.
 
