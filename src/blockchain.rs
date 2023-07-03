@@ -2,19 +2,29 @@ use crate::block::Block;
 use crate::tx::Tx;
 use serde::{Deserialize, Serialize};
 
+/// Represents a blockchain.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Blockchain {
+    /// The blocks in the blockchain.
     pub blocks: Vec<Block>,
+    /// The pending transactions in the blockchain.
     pub pending_txs: Vec<Tx>,
+    /// The difficulty level for mining blocks in the blockchain.
     pub difficulty: u32,
+    /// The reward amount for mining a block in the blockchain.
     pub mining_reward: u32,
 }
 
 impl Blockchain {
+    /// Creates a new instance of the blockchain with a genesis block.
+    ///
+    /// # Returns
+    ///
+    /// A new `Blockchain` instance.
     pub fn new() -> Self {
         let mut tx = Tx {
             sender: "".to_string(),
-            receiver: "03247e21fbb8be9ee2b666d431f43c88c2dd8e422ee805dc6c08593de93b721d7b"
+            receiver: "0378880d9fa9663f0a7261f819e86bd222dcd6796df2dd6451b9bb86c31dbaade7"
                 .to_string(),
             amount: 1000,
             signature: "".to_string(),
@@ -45,3 +55,4 @@ impl Blockchain {
         }
     }
 }
+
