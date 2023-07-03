@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["add_tx"],"struct":["TxResponse"]};
