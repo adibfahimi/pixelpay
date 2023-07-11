@@ -33,11 +33,10 @@ impl Block {
     pub fn calculate_hash(&self) -> String {
         let mut hasher = Sha256::new();
         let data = format!(
-            "{}{}{}{}{}{}",
+            "{}{}{}{}{}",
             self.index,
             self.timestamp,
             self.prev_hash,
-            self.merkle_root,
             self.difficulty,
             self.nonce
         );
