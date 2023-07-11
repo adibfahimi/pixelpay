@@ -2,6 +2,8 @@ use crate::block::Block;
 use crate::tx::Tx;
 use serde::{Deserialize, Serialize};
 
+const BLOCK_RATE: u64 = 12 * 60; // 12 minutes
+
 /// Represents a blockchain.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Blockchain {
@@ -54,5 +56,19 @@ impl Blockchain {
             mining_reward: 100,
         }
     }
-}
 
+    pub fn calculate_difficulty(&self) -> u32 {
+        let mut difficulty = self.difficulty;
+        let last_block = self.blocks.last().unwrap();
+
+        if last_block.index % 10 == 0 {
+            if last_block.timestamp > last_block.timestamp + BLOCK_RATE {
+                difficulty -= 1;
+            } else {
+                difficulty += 1;
+            }
+        }
+
+        difficulty
+    }
+}

@@ -77,10 +77,7 @@ pub async fn get_block(bc: web::Data<Mutex<Blockchain>>) -> impl Responder {
 ///
 /// If there are no pending transactions in the blockchain, an HTTP response with the message
 /// "No transactions to mine" is returned.
-pub async fn add_block(
-    bc: web::Data<Mutex<Blockchain>>,
-    block: web::Json<Block>,
-) -> impl Responder {
+pub async fn add_block(bc: web::Data<Mutex<Blockchain>>, block: web::Json<Block>) -> impl Responder {
     let mut bc_ref = bc.lock().unwrap();
 
     if bc_ref.pending_txs.is_empty() {
@@ -91,9 +88,9 @@ pub async fn add_block(
         Ok(_) => {
             bc_ref.blocks.push(block.into_inner());
             bc_ref.pending_txs = vec![];
+            bc_ref.difficulty = bc_ref.calculate_difficulty();
             HttpResponse::Ok().body("Block added")
         }
         Err(e) => HttpResponse::Ok().body(e),
     }
 }
-
