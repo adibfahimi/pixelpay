@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package blockchain;
+
+option go_package = "github.com/adibfahimi/pixelpay/api/blockchain";
+
+service BlockchainService {
+  rpc GetAllBlocks(Empty) returns (BlocksResponse) {}
+  rpc GetBlockByHash(HashRequest) returns (BlockResponse) {}
+  rpc AddBlock(Block) returns (BlockResponse) {}
+  rpc GetTxByHash(HashRequest) returns (Tx) {}
+  rpc SendTx(Tx) returns (TxResponse) {}
+  rpc GetBlockToMine(Empty) returns (BlockToMineResponse) {}
+  rpc GetBalance(AddressRequest) returns (BalanceResponse) {}
+}
+
+message Empty {}
+
+message Tx {
+  string hash = 1;
+  string from_address = 2;
+  string to_address = 3;
+  int64 amount = 4;
+  int64 timestamp = 5;
+  string signature = 6;
+}
+
+message TxResponse {
+  string tx_hash = 1;
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    PENDING = 1;
+    SUCCESS = 2;
+    FAILED = 3;
+  }
+  Status status = 2;
+}
+
+message AddressRequest { string address = 1; }
+
+message BalanceResponse { int64 balance = 1; }
+
+message HashRequest { string hash = 1; }
+
+message Block {
+  string hash = 1;
+  repeated Tx txs = 2;
+  int64 timestamp = 3;
+  int64 nonce = 4;
+  string previous_hash = 5;
+  string merkle_root = 6;
+  int64 difficulty = 7;
+}
+
+message BlockResponse { Block block = 1; }
+
+message BlocksResponse { repeated Block blocks = 1; }
+
+message BlockToMineResponse {
+  Block block = 1;
+  int64 reward = 2;
+}
